@@ -37,6 +37,10 @@ body {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
+.logo-img {
+    max-height: 50px;
+}
+
 .header {
     background: linear-gradient(135deg, #6a5acd, #3b82f6);
     color: white;
