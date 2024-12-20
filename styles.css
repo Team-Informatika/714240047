@@ -45,6 +45,14 @@ body {
     border-radius: 20px 20px 0 0;
 }
 
+.logo {
+    width: 60px; /* Ukuran logo */
+    height: 60px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .header h1 {
     font-size: 32px;
     font-weight: 700;
