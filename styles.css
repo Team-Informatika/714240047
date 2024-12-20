@@ -7,12 +7,12 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8;
+    background-color: #000000; /* Background hitam */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: #333;
+    color: #fff; /* Mengubah warna teks menjadi putih agar terlihat jelas di background hitam */
 }
 
 .container {
