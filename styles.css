@@ -45,6 +45,14 @@ body {
     border-radius: 20px 20px 0 0;
 }
 
+.profile-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
 .header h1 {
     font-size: 32px;
     font-weight: 700;
