@@ -46,10 +46,10 @@ body {
 }
 
 .logo {
-    width: 60px; /* Ukuran logo */
-    height: 60px;
-    margin-bottom: 20px;
-    border-radius: 50%;
+    width: 50px; /* Ukuran logo lebih kecil */
+    height: 50px;
+    margin-bottom: 15px;
+    border-radius: 50%; /* Membuat gambar menjadi lingkaran */
     object-fit: cover;
 }
 
