@@ -14,7 +14,7 @@
     <title>Kartu Nama</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Include external JavaScript -->
-    <script src="jscroot.js" defer></script>
+    <script type="module" src="main.js"></script>
 </head>
 <body>
     <div class="container">
@@ -22,6 +22,8 @@
             <div class="header">
                 <img src="logo.png" alt="Logo" class="profile-img">
                 <h1>Richard Firmansyah</h1>
+                <div id="content">Loading...
+                </div>
                 <p class="job-title">Joki Rank Mobile Legends All Rank</p>
             </div>
             <div class="contact">
@@ -30,7 +32,7 @@
                 <p><strong>Alamat:</strong> <span id="address">Jalan Ciwaruga No. 12, Kota Bandung, Jawa Barat</span></p>
                 <p><strong>Rate Per Hour:</strong> <span id="rate">20K/Match</span></p>
             </div>
-            <button id="changeInfoBtn">Change Info</button>
+            <!-- <button id="changeInfoBtn">Change Info</button> -->
         </div>
     </div>
 </body>
