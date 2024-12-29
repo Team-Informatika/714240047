@@ -1,20 +1,31 @@
-// Contoh JavaScript untuk interaksi
-document.addEventListener('DOMContentLoaded', () => {
-    // Tambahkan efek hover ke kartu nama
-    const card = document.querySelector('.card');
+// jscroot.js
 
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'scale(1.05)';
-        card.style.transition = 'transform 0.3s ease';
-    });
+// Fungsi untuk merender HTML baru ke dalam elemen tertentu
+function renderHTML(elementId, htmlContent) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.innerHTML = htmlContent;
+    }
+}
 
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'scale(1)';
-    });
+// Fungsi untuk menangani event klik
+function onClickHandler() {
+    const newEmail = "<strong>Email:</strong> richard.newemail@example.com";
+    const newPhone = "<strong>Telepon:</strong> (+62) 9876-5432";
+    const newAddress = "<strong>Alamat:</strong> Jalan Merdeka No. 1, Jakarta";
+    const newRate = "<strong>Rate Per Hour:</strong> 25K/Match";
 
-    // Tampilkan pesan di console ketika elemen diklik
-    card.addEventListener('click', () => {
-        console.log('Hubungi (+62) 1234-5678');
-        alert('Hubungi (+62) 1234-5678');
-    });
+    // Mengubah konten HTML elemen tertentu menggunakan innerHTML
+    renderHTML('email', newEmail);
+    renderHTML('phone', newPhone);
+    renderHTML('address', newAddress);
+    renderHTML('rate', newRate);
+}
+
+// Menambahkan event listener pada tombol untuk mengubah informasi
+document.addEventListener('DOMContentLoaded', function() {
+    const changeInfoBtn = document.getElementById('changeInfoBtn');
+    if (changeInfoBtn) {
+        changeInfoBtn.addEventListener('click', onClickHandler);
+    }
 });
