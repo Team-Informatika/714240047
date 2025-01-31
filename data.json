@@ -1,7 +1,15 @@
 {
-    "company": "Joki Legends Pro",
-    "email": "jokilegendspro@gmail.com",
-    "phone": "(+62) 9876-5432",
-    "address": "Jalan Sukajadi No. 25, Bandung, Jawa Barat",
-    "rate": "30K/Match"
+    "title": "Kartu Nama",
+    "profile": {
+        "name": "Richard Firmansyah",
+        "company": "Joki Legends Pro",
+        "job_title": "Joki Rank Mobile Legends All Rank",
+        "image": "logo.png"
+    },
+    "contact": {
+        "email": "richardfirmansyah13@gmail.com",
+        "phone": "(+62) 1234-5678",
+        "address": "Jalan Ciwaruga No. 12, Kota Bandung, Jawa Barat",
+        "rate": "20K/Match"
+    }
 }

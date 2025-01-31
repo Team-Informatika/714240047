@@ -1,23 +1,32 @@
-async function getJSON(url) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        updateContent(data);
-    } catch (error) {
-        console.error("Error fetching JSON:", error);
+import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
+import { setInner, setAttribute } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
+
+const apiURL = "data.json"; // Ambil dari file JSON lokal
+
+getJSON(apiURL, null, null, renderHTML);
+
+function renderHTML(response) {
+    console.log('HTTP Status:', response.status);
+    console.log('Response Data:', response.data);
+
+    if (response.status === 200) {
+        const data = response.data;
+
+        // Set judul halaman
+        setInner("page-title", data.title);
+
+        // Set informasi profil
+        setInner("profile-name", data.profile.name);
+        setInner("company-name", data.profile.company);
+        setInner("job-title", data.profile.job_title);
+        setAttribute("profile-img", "src", data.profile.image);
+
+        // Set informasi kontak
+        setInner("email", data.contact.email);
+        setInner("phone", data.contact.phone);
+        setInner("address", data.contact.address);
+        setInner("rate", data.contact.rate);
+    } else {
+        console.error("Gagal mengambil data JSON");
     }
 }
-
-function updateContent(data) {
-    document.getElementById("co").textContent = data.company || "Tidak tersedia";
-    document.getElementById("email").textContent = data.email || "Tidak tersedia";
-    document.getElementById("phone").textContent = data.phone || "Tidak tersedia";
-    document.getElementById("address").textContent = data.address || "Tidak tersedia";
-    document.getElementById("rate").textContent = data.rate || "Tidak tersedia";
-}
-
-// Panggil fungsi dengan URL JSON (ganti dengan URL yang sesuai)
-getJSON("https://t.if.co.id/714240061/");
