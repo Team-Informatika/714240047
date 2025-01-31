@@ -32,5 +32,4 @@ function renderHTML(response) {
 
 // Gunakan then() untuk menghindari callback error
 getJSON(apiURL, null, null)
-    .then(response => renderHTML(response))
     .catch(error => console.error("Error fetching JSON:", error));
