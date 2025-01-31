@@ -1,4 +1,5 @@
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.1/api.js";
+import { setInner } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.1/element.js";
 
 // const apiURL = "richard.json"; // Ambil dari file JSON lokal
 
