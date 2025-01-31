@@ -1,5 +1,5 @@
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
-import { setInner, setAttribute } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
+import { setInner } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 
 const apiURL = "https://t.if.co.id/json/richard.json"; // Pastikan URL ini benar dan bisa diakses
 
