@@ -1,14 +1,20 @@
-import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.1/api.js";
-import { setInner } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.1/element.js";
+import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
+import { setInner, setAttribute } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 
-// const apiURL = "richard.json"; // Ambil dari file JSON lokal
+const apiURL = "https://t.if.co.id/json/richard.json"; // Pastikan URL ini bisa diakses di browser
 
-getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
+// Menggunakan then() untuk menangani response
+getJSON(apiURL, null, null)
+    .then(response => {
+        console.log('HTTP Status:', response.status);
+        console.log('Response Data:', response.data);
+        renderHTML(response);
+    })
+    .catch(error => {
+        console.error("Error fetching JSON:", error);
+    });
 
-function responseFunction(response) {
-    console.log('HTTP Status:', response.status);
-    console.log('Response Data:', response.data);
-
+function renderHTML(response) {
     if (response.status === 200) {
         const data = response.data;
 
