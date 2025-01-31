@@ -5,7 +5,7 @@ import { setInner, setAttribute } from "https://cdn.jsdelivr.net/gh/jscroot/lib@
 
 getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
 
-function responseFunction(response) {
+function renderHTML(response) {
     console.log('HTTP Status:', response.status);
     console.log('Response Data:', response.data);
 
