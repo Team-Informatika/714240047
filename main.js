@@ -3,6 +3,8 @@ import { setInner } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.
 
 const apiURL = "https://t.if.co.id/json/richard.json"; // Pastikan URL ini benar dan bisa diakses
 
+getJSON( "https://t.if.co.id/json/richard.json", null, null, responseFunction)
+
 // Pastikan fungsi dideklarasikan sebelum dipanggil
 function renderHTML(response) {
     if (response.status === 200) {
@@ -29,7 +31,3 @@ function renderHTML(response) {
         console.error("Gagal mengambil data JSON");
     }
 }
-
-// Gunakan then() untuk menghindari callback error
-getJSON(apiURL, null, null)
-    .catch(error => console.error("Error fetching JSON:", error));
