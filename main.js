@@ -1,29 +1,39 @@
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 import { renderHTML } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 
-// Render halaman
+// Render halaman home.html ke dalam #root
 renderHTML("root", "home.html");
 
 // Ambil data dari JSON
 getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
 
 function responseFunction(response) {
+    console.log("Data JSON yang diterima:", response); // Debugging untuk melihat struktur JSON
+
+    if (!response || !response.card || !response.card.details) {
+        console.error("Error: Data JSON tidak sesuai atau kosong!");
+        return;
+    }
+
     const data = response.card.details;
-    const avatar = response.card.avatar;
-    const socialLinks = data.social_links;
+    const avatar = response.card.avatar || {};
+    const socialLinks = data.social_links || [];
 
     // Render avatar
-    document.getElementById("profile-img").src = avatar.src;
-    document.getElementById("profile-img").alt = avatar.alt;
+    const profileImg = document.getElementById("profile-img");
+    if (profileImg) {
+        profileImg.src = avatar.src || "default-avatar.png";
+        profileImg.alt = avatar.alt || "Foto Profil";
+    }
 
     // Render nama
-    document.getElementById("profile-name").textContent = data.name;
+    document.getElementById("profile-name").textContent = data.name || "Tidak tersedia";
 
     // Render company name (Tidak ada di JSON, diisi default)
     document.getElementById("company-name").textContent = "Freelancer MLBB";
 
     // Render job title
-    document.getElementById("job-title").textContent = data.occupation;
+    document.getElementById("job-title").textContent = data.occupation || "Tidak tersedia";
 
     // Render email dari social_links
     const emailObj = socialLinks.find(link => link.platform === "Email");
@@ -43,5 +53,5 @@ function responseFunction(response) {
     }
 
     // Render rate per pertandingan
-    document.getElementById("rate").textContent = data.rate_day.price;
+    document.getElementById("rate").textContent = data.rate_day?.price || "Tidak tersedia";
 }
