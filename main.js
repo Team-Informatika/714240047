@@ -1,74 +1,43 @@
 import { getJSON } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/api.js";
 import { renderHTML } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.js";
 
-// Render halaman home.html ke dalam #root
+// Render halaman
 renderHTML("root", "home.html");
 
-// Tunggu hingga home.html selesai dimuat sebelum mengambil data JSON
-setTimeout(() => {
-    getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
-}, 1000); // Tunggu 1 detik agar home.html selesai dimuat
+// Ambil data dari JSON
+getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
 
 function responseFunction(response) {
-    console.log("Data JSON yang diterima:", response); // Debugging
-
-    const jsonData = response.data || response; 
-
-    if (!jsonData.card || !jsonData.card.details) {
-        console.error("Error: Struktur JSON tidak sesuai!", jsonData);
+    if (!response || !response.data || !response.data.card) {
+        console.error("❌ Data JSON tidak valid!", response);
         return;
     }
 
-    const data = jsonData.card.details;
-    const avatar = jsonData.card.avatar || {};
-    const socialLinks = data.social_links || [];
+    const card = response.data.card;
+    const details = card.details;
+    const avatar = card.avatar;
 
-    // Fungsi aman untuk mengatur teks ke elemen
-    function setText(id, value) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = value || "Tidak tersedia";
-        } else {
-            console.warn(`⚠️ Elemen dengan ID "${id}" tidak ditemukan.`);
-        }
-    }
-
-    function setHTML(id, value) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.innerHTML = value || "Tidak tersedia";
-        } else {
-            console.warn(`⚠️ Elemen dengan ID "${id}" tidak ditemukan.`);
-        }
+    if (!details || !avatar) {
+        console.error("❌ Struktur JSON tidak sesuai!", response);
+        return;
     }
 
     // Render avatar
-    const avatarHTML = `<img src="${avatar.src || 'default-avatar.png'}" 
-                        alt="${avatar.alt || 'Foto Profil'}" 
-                        style="width:100px; height:100px; border-radius:50%;">`;
-    setHTML("profile-img", avatarHTML);
-
-    // Render teks informasi
-    setText("profile-name", data.name);
-    setText("company-name", "Freelancer MLBB");
-    setText("job-title", data.occupation);
-
-    // Render email
-    const emailObj = socialLinks.find(link => link.platform === "Email");
-    setText("email", emailObj ? emailObj.url.replace("mailto:", "") : "Tidak tersedia");
-
-    // Render phone
-    const phoneObj = socialLinks.find(link => link.platform === "WhatsApp");
-    setText("phone", phoneObj ? phoneObj.url.replace("https://wa.me/", "") : "Tidak tersedia");
-
-    // Render address sebagai link
-    const addressObj = socialLinks.find(link => link.platform === "Alamat");
-    if (addressObj) {
-        setHTML("address", `<a href="${addressObj.url}" target="_blank">Lihat di Maps</a>`);
+    const profileImgDiv = document.getElementById("profile-img");
+    if (profileImgDiv) {
+        profileImgDiv.innerHTML = `<img src="${avatar.src}" 
+                                   alt="${avatar.alt}" 
+                                   style="width: 100px; height: 100px; border-radius: 50%;">`;
     } else {
-        setText("address", "Tidak tersedia");
+        console.error("❌ Elemen 'profile-img' tidak ditemukan di home.html!");
     }
 
-    // Render rate per pertandingan
-    setText("rate", data.rate_day?.price);
+    // Render teks
+    document.getElementById("profile-name").textContent = details.name || "Nama Tidak Ditemukan";
+    document.getElementById("company-name").textContent = details.occupation || "Pekerjaan Tidak Ditemukan";
+    document.getElementById("job-title").textContent = details.about[0]?.value || "Deskripsi Tidak Ditemukan";
+    document.getElementById("email").textContent = details.social_links[0]?.url.replace("mailto:", "") || "Email Tidak Tersedia";
+    document.getElementById("phone").textContent = details.social_links[1]?.url.replace("https://wa.me/", "") || "Telepon Tidak Tersedia";
+    document.getElementById("address").textContent = details.social_links[2]?.url || "Alamat Tidak Tersedia";
+    document.getElementById("rate").textContent = details.rate_day.price || "Tarif Tidak Diketahui";
 }
