@@ -8,22 +8,24 @@ renderHTML("root", "home.html");
 getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
 
 function responseFunction(response) {
-    console.log("Data JSON yang diterima:", response); // Debugging untuk melihat struktur JSON
+    console.log("Data JSON yang diterima:", response); // Debugging
 
-    if (!response || !response.card || !response.card.details) {
-        console.error("Error: Data JSON tidak sesuai atau kosong!");
+    // Periksa apakah data ada di dalam `response.data`
+    const jsonData = response.data || response; 
+
+    if (!jsonData.card || !jsonData.card.details) {
+        console.error("Error: Struktur JSON tidak sesuai!", jsonData);
         return;
     }
 
-    const data = response.card.details;
-    const avatar = response.card.avatar || {};
+    const data = jsonData.card.details;
+    const avatar = jsonData.card.avatar || {};
     const socialLinks = data.social_links || [];
 
     // Render avatar
     const profileImg = document.getElementById("profile-img");
     if (profileImg) {
-        profileImg.src = avatar.src || "default-avatar.png";
-        profileImg.alt = avatar.alt || "Foto Profil";
+        profileImg.innerHTML = `<img src="${avatar.src || 'default-avatar.png'}" alt="${avatar.alt || 'Foto Profil'}">`;
     }
 
     // Render nama
@@ -46,8 +48,7 @@ function responseFunction(response) {
     // Render address sebagai link
     const addressObj = socialLinks.find(link => link.platform === "Alamat");
     if (addressObj) {
-        document.getElementById("address").href = addressObj.url;
-        document.getElementById("address").textContent = "Lihat di Maps";
+        document.getElementById("address").innerHTML = `<a href="${addressObj.url}" target="_blank">Lihat di Maps</a>`;
     } else {
         document.getElementById("address").textContent = "Tidak tersedia";
     }
