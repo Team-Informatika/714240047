@@ -8,6 +8,8 @@ renderHTML("root", "home.html");
 getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
 
 function responseFunction(response) {
+    console.log("✅ Data JSON diterima:", response);
+
     if (!response || !response.data || !response.data.card) {
         console.error("❌ Data JSON tidak valid!", response);
         return;
@@ -21,6 +23,16 @@ function responseFunction(response) {
         console.error("❌ Struktur JSON tidak sesuai!", response);
         return;
     }
+
+    console.log("🔍 Data terdeteksi:");
+    console.log("🖼️ Gambar Profil:", avatar.src);
+    console.log("👤 Nama:", details.name);
+    console.log("💼 Pekerjaan:", details.occupation);
+    console.log("📌 Deskripsi:", details.about[0]?.value);
+    console.log("💰 Tarif:", details.rate_day.price);
+    console.log("📧 Email:", details.social_links[0]?.url);
+    console.log("📞 Telepon:", details.social_links[1]?.url);
+    console.log("📍 Alamat:", details.social_links[2]?.url);
 
     // Render avatar
     const profileImgDiv = document.getElementById("profile-img");
@@ -40,4 +52,6 @@ function responseFunction(response) {
     document.getElementById("phone").textContent = details.social_links[1]?.url.replace("https://wa.me/", "") || "Telepon Tidak Tersedia";
     document.getElementById("address").textContent = details.social_links[2]?.url || "Alamat Tidak Tersedia";
     document.getElementById("rate").textContent = details.rate_day.price || "Tarif Tidak Diketahui";
+
+    console.log("✅ Semua elemen sudah diperbarui di halaman!");
 }
