@@ -4,13 +4,14 @@ import { renderHTML } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/elemen
 // Render halaman home.html ke dalam #root
 renderHTML("root", "home.html");
 
-// Ambil data dari JSON
-getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
+// Tunggu hingga home.html dimuat sebelum mengambil data JSON
+setTimeout(() => {
+    getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
+}, 1000); // Tunggu 1 detik agar home.html selesai dimuat
 
 function responseFunction(response) {
     console.log("Data JSON yang diterima:", response); // Debugging
 
-    // Periksa apakah data ada di dalam `response.data`
     const jsonData = response.data || response; 
 
     if (!jsonData.card || !jsonData.card.details) {
@@ -22,37 +23,49 @@ function responseFunction(response) {
     const avatar = jsonData.card.avatar || {};
     const socialLinks = data.social_links || [];
 
-    // Render avatar
-    const profileImg = document.getElementById("profile-img");
-    if (profileImg) {
-        profileImg.innerHTML = `<img src="${avatar.src || 'default-avatar.png'}" alt="${avatar.alt || 'Foto Profil'}">`;
+    // Fungsi untuk menghindari error jika elemen tidak ditemukan
+    function setText(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value || "Tidak tersedia";
+        } else {
+            console.warn(`⚠️ Elemen dengan ID "${id}" tidak ditemukan.`);
+        }
     }
 
-    // Render nama
-    document.getElementById("profile-name").textContent = data.name || "Tidak tersedia";
+    function setHTML(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = value || "Tidak tersedia";
+        } else {
+            console.warn(`⚠️ Elemen dengan ID "${id}" tidak ditemukan.`);
+        }
+    }
 
-    // Render company name (Tidak ada di JSON, diisi default)
-    document.getElementById("company-name").textContent = "Freelancer MLBB";
+    // Render avatar
+    setHTML("profile-img", `<img src="${avatar.src || 'default-avatar.png'}" alt="${avatar.alt || 'Foto Profil'}">`);
 
-    // Render job title
-    document.getElementById("job-title").textContent = data.occupation || "Tidak tersedia";
+    // Render teks informasi
+    setText("profile-name", data.name);
+    setText("company-name", "Freelancer MLBB");
+    setText("job-title", data.occupation);
 
-    // Render email dari social_links
+    // Render email
     const emailObj = socialLinks.find(link => link.platform === "Email");
-    document.getElementById("email").textContent = emailObj ? emailObj.url.replace("mailto:", "") : "Tidak tersedia";
+    setText("email", emailObj ? emailObj.url.replace("mailto:", "") : "Tidak tersedia");
 
-    // Render phone dari WhatsApp
+    // Render phone
     const phoneObj = socialLinks.find(link => link.platform === "WhatsApp");
-    document.getElementById("phone").textContent = phoneObj ? phoneObj.url.replace("https://wa.me/", "") : "Tidak tersedia";
+    setText("phone", phoneObj ? phoneObj.url.replace("https://wa.me/", "") : "Tidak tersedia");
 
     // Render address sebagai link
     const addressObj = socialLinks.find(link => link.platform === "Alamat");
     if (addressObj) {
-        document.getElementById("address").innerHTML = `<a href="${addressObj.url}" target="_blank">Lihat di Maps</a>`;
+        setHTML("address", `<a href="${addressObj.url}" target="_blank">Lihat di Maps</a>`);
     } else {
-        document.getElementById("address").textContent = "Tidak tersedia";
+        setText("address", "Tidak tersedia");
     }
 
     // Render rate per pertandingan
-    document.getElementById("rate").textContent = data.rate_day?.price || "Tidak tersedia";
+    setText("rate", data.rate_day?.price);
 }
