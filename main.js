@@ -3,7 +3,8 @@ import { setInner } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/element.
 
 const apiURL = "https://t.if.co.id/json/richard.json"; // Pastikan URL ini benar dan bisa diakses
 
-getJSON( "https://t.if.co.id/json/richard.json", null, null, responseFunction)
+// Panggil getJSON dengan fungsi callback yang benar
+getJSON(apiURL, null, null, renderHTML);
 
 // Pastikan fungsi dideklarasikan sebelum dipanggil
 function renderHTML(response) {
@@ -20,7 +21,9 @@ function renderHTML(response) {
         setInner("profile-name", data.profile.name);
         setInner("company-name", data.profile.company);
         setInner("job-title", data.profile.job_title);
-        setAttribute("profile-img", "src", data.profile.image);
+        
+        // Set gambar profil dengan cara yang benar
+        document.getElementById("profile-img").setAttribute("src", data.profile.image);
 
         // Set informasi kontak
         setInner("email", data.contact.email);
