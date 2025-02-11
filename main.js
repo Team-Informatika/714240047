@@ -4,7 +4,7 @@ import { renderHTML } from "https://cdn.jsdelivr.net/gh/jscroot/lib@0.2.0/elemen
 // Render halaman home.html ke dalam #root
 renderHTML("root", "home.html");
 
-// Tunggu hingga home.html dimuat sebelum mengambil data JSON
+// Tunggu hingga home.html selesai dimuat sebelum mengambil data JSON
 setTimeout(() => {
     getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
 }, 1000); // Tunggu 1 detik agar home.html selesai dimuat
@@ -23,7 +23,7 @@ function responseFunction(response) {
     const avatar = jsonData.card.avatar || {};
     const socialLinks = data.social_links || [];
 
-    // Fungsi untuk menghindari error jika elemen tidak ditemukan
+    // Fungsi aman untuk mengatur teks ke elemen
     function setText(id, value) {
         const element = document.getElementById(id);
         if (element) {
@@ -43,7 +43,10 @@ function responseFunction(response) {
     }
 
     // Render avatar
-    setHTML("profile-img", `<img src="${avatar.src || 'default-avatar.png'}" alt="${avatar.alt || 'Foto Profil'}">`);
+    const avatarHTML = `<img src="${avatar.src || 'default-avatar.png'}" 
+                        alt="${avatar.alt || 'Foto Profil'}" 
+                        style="width:100px; height:100px; border-radius:50%;">`;
+    setHTML("profile-img", avatarHTML);
 
     // Render teks informasi
     setText("profile-name", data.name);
