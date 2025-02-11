@@ -13,13 +13,13 @@ function responseFunction(response) {
     const socialLinks = data.social_links;
 
     // Render avatar
-    const avatarHTML = `<img src="${avatar.src}" alt="${avatar.alt}">`;
-    document.getElementById("profile-img").innerHTML = avatarHTML;
+    document.getElementById("profile-img").src = avatar.src;
+    document.getElementById("profile-img").alt = avatar.alt;
 
     // Render nama
     document.getElementById("profile-name").textContent = data.name;
 
-    // Render company name (Tidak ada di JSON, bisa dikosongkan atau diisi manual)
+    // Render company name (Tidak ada di JSON, diisi default)
     document.getElementById("company-name").textContent = "Freelancer MLBB";
 
     // Render job title
@@ -33,9 +33,14 @@ function responseFunction(response) {
     const phoneObj = socialLinks.find(link => link.platform === "WhatsApp");
     document.getElementById("phone").textContent = phoneObj ? phoneObj.url.replace("https://wa.me/", "") : "Tidak tersedia";
 
-    // Render address dari social_links
+    // Render address sebagai link
     const addressObj = socialLinks.find(link => link.platform === "Alamat");
-    document.getElementById("address").textContent = addressObj ? "Lihat di Maps" : "Tidak tersedia";
+    if (addressObj) {
+        document.getElementById("address").href = addressObj.url;
+        document.getElementById("address").textContent = "Lihat di Maps";
+    } else {
+        document.getElementById("address").textContent = "Tidak tersedia";
+    }
 
     // Render rate per pertandingan
     document.getElementById("rate").textContent = data.rate_day.price;
