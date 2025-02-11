@@ -8,45 +8,35 @@ renderHTML("root", "home.html");
 getJSON("https://t.if.co.id/json/richard.json", null, null, responseFunction);
 
 function responseFunction(response) {
-    const data = response.data;
+    const data = response.card.details;
+    const avatar = response.card.avatar;
+    const socialLinks = data.social_links;
 
     // Render avatar
-    const avatarHTML = `<img src="${data.profileImage}" alt="Profile Image">`;
+    const avatarHTML = `<img src="${avatar.src}" alt="${avatar.alt}">`;
     document.getElementById("profile-img").innerHTML = avatarHTML;
 
     // Render nama
-    document.getElementById("profile-name").textContent = data.profileName;
+    document.getElementById("profile-name").textContent = data.name;
 
-    // Render company name
-    document.getElementById("company-name").textContent = data.companyName;
+    // Render company name (Tidak ada di JSON, bisa dikosongkan atau diisi manual)
+    document.getElementById("company-name").textContent = "Freelancer MLBB";
 
     // Render job title
-    document.getElementById("job-title").textContent = data.jobTitle;
+    document.getElementById("job-title").textContent = data.occupation;
 
-    // Render email
-    document.getElementById("email").textContent = data.email;
+    // Render email dari social_links
+    const emailObj = socialLinks.find(link => link.platform === "Email");
+    document.getElementById("email").textContent = emailObj ? emailObj.url.replace("mailto:", "") : "Tidak tersedia";
 
-    // Render phone
-    document.getElementById("phone").textContent = data.phone;
+    // Render phone dari WhatsApp
+    const phoneObj = socialLinks.find(link => link.platform === "WhatsApp");
+    document.getElementById("phone").textContent = phoneObj ? phoneObj.url.replace("https://wa.me/", "") : "Tidak tersedia";
 
-    // Render address
-    document.getElementById("address").textContent = data.address;
+    // Render address dari social_links
+    const addressObj = socialLinks.find(link => link.platform === "Alamat");
+    document.getElementById("address").textContent = addressObj ? "Lihat di Maps" : "Tidak tersedia";
 
-    // Render hourly rate
-    document.getElementById("rate").textContent = data.ratePerHour;
-}
-
-// Fungsi untuk membuka modal
-function openModal(src) {
-  const modal = document.getElementById("modal");
-  const modalImage = document.getElementById("modalImage");
-
-  modalImage.src = src;
-  modal.classList.add("active");
-
-  // Tutup modal saat pengguna mengklik di luar gambar
-  modal.addEventListener("click", () => {
-    modal.classList.remove("active");
-    modalImage.src = ""; // Kosongkan src untuk menghindari cache
-  });
+    // Render rate per pertandingan
+    document.getElementById("rate").textContent = data.rate_day.price;
 }
