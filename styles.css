@@ -1,14 +1,93 @@
-.profile-img {
+/* Reset styling default */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000000; /* Background hitam */
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%; /* Pastikan div mengambil seluruh lebar */
-    margin-bottom: 10px;
+    height: 100vh;
+    color: #fff; /* Mengubah warna teks menjadi putih agar terlihat jelas di background hitam */
 }
 
-.profile-img img {
-    width: 100px;
-    height: 100px;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 360px;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.logo-img {
+    max-height: 50px;
+}
+
+.header {
+    background: linear-gradient(135deg, #6a5acd, #3b82f6);
+    color: white;
+    padding: 40px 20px;
+    border-bottom: 5px solid #ffffff;
+    border-radius: 20px 20px 0 0;
+}
+
+.profile-img {
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     object-fit: cover;
+    margin-right: 1px;
+}
+
+.header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.job-title {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.contact {
+    padding: 30px 20px;
+    background-color: #f7f7f7;
+    font-size: 16px;
+    color: #444;
+    border-top: 2px solid #e0e0e0;
+}
+
+.contact p {
+    margin-bottom: 15px;
+}
+
+.contact strong {
+    color: #3b82f6;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 90%;
+    }
 }
