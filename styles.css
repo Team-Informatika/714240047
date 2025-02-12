@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: #fff; /* Mengubah warna teks menjadi putih agar terlihat jelas di background hitam */
+    color: #fff; /* Teks putih agar kontras */
 }
 
 .container {
@@ -37,10 +37,6 @@ body {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-.logo-img {
-    max-height: 50px;
-}
-
 .header {
     background: linear-gradient(135deg, #6a5acd, #3b82f6);
     color: white;
@@ -49,12 +45,13 @@ body {
     border-radius: 20px 20px 0 0;
 }
 
-.profile-img {
+.profile-img img {
     width: 90px;
     height: 90px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 1px;
+    display: block;
+    margin: 0 auto; /* Menengahkan gambar */
 }
 
 .header h1 {
